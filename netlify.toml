@@ -1,0 +1,10 @@
+[build]
+  command = "vite build"
+  publish = "dist"
+  functions = "netlify/functions"
+
+[dev]
+  command = "vite" # Command to start your dev server
+  port = 5173      # The port Vite uses
+  publish = "dist"
+  targetPort = 5173
