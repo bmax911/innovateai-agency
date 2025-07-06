@@ -1,70 +1,115 @@
+// src/components/Phenomenal.tsx
 import React from 'react';
+import { motion } from 'framer-motion';
+import { Quote, BarChart, Zap, Users } from 'lucide-react';
 
-/**
- * Phenomenal component: A showcase section built with principles of simplicity, visual hierarchy,
- * F-shaped pattern reading, and a grid-based layout. Use for landing pages, feature highlights, etc.
- */
-const features = [
+// --- Data Structure for Social Proof ---
+// This is where you'll put your real user data.
+// For now, we use compelling placeholders.
+const userProofs = [
   {
-    title: 'AI-Powered Automation',
-    description: 'Automate repetitive tasks and workflows with cutting-edge AI models, saving you time and boosting productivity.',
-    icon: (
-      <svg width="32" height="32" fill="none" viewBox="0 0 32 32"><circle cx="16" cy="16" r="16" fill="#06b6d4"/><path d="M10 16h12M16 10v12" stroke="#fff" strokeWidth="2" strokeLinecap="round"/></svg>
-    ),
+    type: 'testimonial',
+    name: 'Sarah L.',
+    title: 'Founder, Bloom & Branch',
+    avatar: 'E:\\Innovateai-agency\\innovateai-agency\\public\\avatar1.png',
+    quote: "InnovateAI's automation saved us 10+ hours a week. It's not just a tool; it's like having a new, hyper-efficient team member. A total game-changer for our small business.",
   },
   {
-    title: 'Seamless Integrations',
-    description: 'Connect with your favorite tools like n8n, Slack, and more. Integrate effortlessly for a unified workflow.',
-    icon: (
-      <svg width="32" height="32" fill="none" viewBox="0 0 32 32"><rect width="32" height="32" rx="16" fill="#818cf8"/><path d="M10 16h12M16 10v12" stroke="#fff" strokeWidth="2" strokeLinecap="round"/></svg>
-    ),
+    type: 'case-study',
+    company: 'Nexus Dynamics',
+    logo: 'E:\\Innovateai-agency\\innovateai-agency\\public\\logo-nexus.png',
+    title: 'Lead Generation Increased by 43%',
+    description: 'By implementing a custom AI chatbot and n8n workflow, Nexus Dynamics automated their lead qualification process, resulting in a significant and measurable boost in high-quality leads.',
+    icon: <BarChart className="text-primary" />,
   },
   {
-    title: 'Custom Websites',
-    description: 'Get beautiful, high-converting websites tailored to your brand and business goals.',
-    icon: (
-      <svg width="32" height="32" fill="none" viewBox="0 0 32 32"><rect width="32" height="32" rx="16" fill="#f59e42"/><path d="M10 16h12M16 10v12" stroke="#fff" strokeWidth="2" strokeLinecap="round"/></svg>
-    ),
+    type: 'testimonial',
+    name: 'David Chen',
+    title: 'Marketing Head, QuantumLeap',
+    avatar: 'E:\\Innovateai-agency\\innovateai-agency\\public\\avatar2.jpg',
+    quote: "The website they built for us is not only beautiful but incredibly fast. Our conversion rates have never been better. The process was seamless and professional from start to finish.",
   },
   {
-    title: 'Intelligent Chatbots',
-    description: 'Engage your customers 24/7 with smart, conversational AI chatbots that drive results.',
-    icon: (
-      <svg width="32" height="32" fill="none" viewBox="0 0 32 32"><rect width="32" height="32" rx="16" fill="#10b981"/><path d="M10 16h12M16 10v12" stroke="#fff" strokeWidth="2" strokeLinecap="round"/></svg>
-    ),
+    type: 'stat-card',
+    value: '68%',
+    label: 'Average Cost Reduction',
+    description: 'Compared to hiring in-house or using mainstream enterprise tools.',
+    icon: <Zap className="text-primary" />,
   },
 ];
 
+
 const Phenomenal: React.FC = () => {
   return (
-    <section className="w-full bg-white dark:bg-neutral-900 py-16 px-4">
+    <section className="w-full bg-gray-50 dark:bg-dark-background py-20 md:py-28 px-4">
       <div className="max-w-6xl mx-auto">
-        {/* Headline and intro (F-pattern: left-aligned, bold, short) */}
-        <div className="mb-12">
-          <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 dark:text-white mb-2 tracking-tight">
-            Phenomenal Results, Simple Experience
+        {/* --- Headline Section --- */}
+        <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.5 }}
+            transition={{ duration: 0.5 }}
+            className="text-center mb-16"
+        >
+          <h2 className="text-4xl md:text-5xl font-bold text-foreground dark:text-dark-foreground tracking-tight">
+            Phenomenal Results, Proven by Users
           </h2>
-          <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl">
-            Discover how InnovateAI transforms your business with a clean, focused, and effective approach to automation and digital growth.
+          <p className="text-lg text-gray-600 dark:text-gray-300 max-w-3xl mx-auto mt-4">
+            We're not just building tools; we're building success stories. See how businesses like yours are thriving with InnovateAI.
           </p>
-        </div>
-        {/* Grid-based feature layout (visual hierarchy, F-pattern) */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {features.map((feature, idx) => (
-            <div
-              key={feature.title}
-              className="flex items-start gap-4 bg-neutral-50 dark:bg-neutral-800 rounded-xl p-6 shadow-sm hover:shadow-lg transition-shadow border border-neutral-200 dark:border-neutral-700"
-              style={{ gridColumn: idx === 0 ? 'span 2' : undefined }}
-            >
-              <div className="flex-shrink-0">{feature.icon}</div>
-              <div>
-                <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-1">{feature.title}</h3>
-                <p className="text-gray-600 dark:text-gray-300 text-sm leading-relaxed">
-                  {feature.description}
-                </p>
-              </div>
-            </div>
-          ))}
+        </motion.div>
+
+        {/* --- The "Results Wall" Grid --- */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          {userProofs.map((proof, index) => {
+            
+            // --- Testimonial Card ---
+            if (proof.type === 'testimonial') {
+              return (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 50 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, amount: 0.3 }}
+                  transition={{ duration: 0.6, delay: index * 0.1 }}
+                  className="bg-card dark:bg-dark-card rounded-2xl p-8 shadow-lg hover:shadow-primary/10 transition-shadow duration-300"
+                >
+                  <Quote className="w-8 h-8 text-primary/50 mb-4" />
+                  <p className="text-lg text-foreground dark:text-dark-foreground mb-6 italic">"{proof.quote}"</p>
+                  <div className="flex items-center">
+                    <img className="w-12 h-12 rounded-full object-cover mr-4 border-2 border-primary/50" src={proof.avatar} alt={proof.name} />
+                    <div>
+                      <h4 className="font-bold text-foreground dark:text-dark-foreground">{proof.name}</h4>
+                      <p className="text-sm text-gray-500">{proof.title}</p>
+                    </div>
+                  </div>
+                </motion.div>
+              );
+            }
+
+            // --- Case Study / Stat Card ---
+            if (proof.type === 'case-study' || proof.type === 'stat-card') {
+              return (
+                 <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 50 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, amount: 0.3 }}
+                  transition={{ duration: 0.6, delay: index * 0.1 }}
+                  className="bg-primary/5 dark:bg-dark-card rounded-2xl p-8 flex flex-col justify-center items-center text-center shadow-lg hover:shadow-primary/10 transition-shadow duration-300"
+                >
+                  {proof.type === 'case-study' ? 
+                    <img src={proof.logo} alt={proof.company} className="h-10 mb-4" /> : 
+                    <div className="text-6xl font-bold text-primary mb-2">{proof.value}</div>
+                  }
+                  <h3 className="text-2xl font-bold text-foreground dark:text-dark-foreground">{proof.title || proof.label}</h3>
+                  <p className="mt-2 text-gray-600 dark:text-gray-400">{proof.description}</p>
+                </motion.div>
+              );
+            }
+            
+            return null;
+          })}
         </div>
       </div>
     </section>
